@@ -1,36 +1,47 @@
 function checkCashRegister(price, cash, cid) {
 	var change = [];
+
 	var changeDue = cash - price;
 	var valueOf = [0.01, 0.05, 0.1, 0.25, 1, 5, 10, 20, 100];
 	var revCid = cid.reverse();
 	var valueRev = valueOf.reverse();
+	var cidTotal = 0;
 
-	//console.log(cid[0][0]);
-
-	//iterate through CID values, starting from hundred
-
-	revCid.forEach(function(denomination, index) {
-		//if changeDue is < VALUEOF cid[index] && changeDue % VALUEOF === 0
-		console.log("changeDue", changeDue, "valueOf", valueRev[index]);
-		if (changeDue > valueRev[index]) {
-			console.log("match");
-			changeDue -= valueRev[index - 1];
-			console.log(
-				"denomination:",
-				valueOf[index],
-				"changeDue",
-				changeDue
-			);
-
-		}
-		break
+	//1. sum cash in draw
+	cid.forEach(function(denomination, index) {
+		var amount = denomination[1];
+		cidTotal += amount;
 	});
 
-	//console.log(change);
+	if (cidTotal < changeDue) {
+		console.log("insufficient funds");
+	} else if (cidTotal === changeDue) {
+		console.log("closed");
+	} else {
+		//MAIN LOGIC
+		//console.log(revCid,"cash in drawer:",cidTotal, valueOf, cidTotal, "change due", changeDue,)
 
-	//change.push(cid[index])
-	//value of cid[index] += VALUEOF
-	//CHANGEDUE -= VALUEOF
+		revCid.forEach(function(denom, index) {
+			//console.log("denom", valueOf[index])
+			//console.log("amount", revCid[index][1])
+			var denom = valueOf[index];
+			var cidAmt = revCid[index][1];
+
+			if (valueOf[index] < changeDue && cidAmt > valueOf[index]) {
+				console.log(
+					"Start here",
+					"denom:",
+					denom,
+					"cidAmt:",
+					cidAmt,
+					"due:",
+					changeDue
+				);
+				changeDue -= denom;
+				cidAmt -= denom;
+			}
+		});
+	}
 
 	return change;
 }
