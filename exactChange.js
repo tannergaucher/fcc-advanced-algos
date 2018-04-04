@@ -18,35 +18,30 @@ function checkCashRegister(price, cash, cid) {
 	} else if (cidTotal === changeDue) {
 		console.log("closed");
 	} else {
-		//MAIN LOGIC
-		//console.log(revCid,"cash in drawer:",cidTotal, valueOf, cidTotal, "change due", changeDue,)
+		//LOGIC
+		function makeChange() {
+			var i = 0;
+			console.log("inside else");
 
-		revCid.forEach(function(denom, index) {
-			//console.log("denom", valueOf[index])
-			//console.log("amount", revCid[index][1])
-			var denom = valueOf[index];
-			var cidAmt = revCid[index][1];
-
-			if (valueOf[index] < changeDue && cidAmt > valueOf[index]) {
-				console.log(
-					"Start here",
-					"denom:",
-					denom,
-					"cidAmt:",
-					cidAmt,
-					"due:",
-					changeDue
-				);
-				changeDue -= denom;
-				cidAmt -= denom;
+			while (changeDue > 0) {
+				if (changeDue >= valueRev[i]) {
+					change.push(valueRev[i]);
+					changeDue -= valueRev[i];
+					console.log("changeDue", changeDue);
+				} else if (changeDue === 0) {
+					return;
+				} else {
+					i++;
+				}
 			}
-		});
+		}
+		makeChange();
+		console.log(change);
 	}
-
-	return change;
+	//return change;
 }
 
-checkCashRegister(19.5, 20.0, [
+checkCashRegister(7.5, 20.0, [
 	["PENNY", 1.01],
 	["NICKEL", 2.05],
 	["DIME", 3.1],
