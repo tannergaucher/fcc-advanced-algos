@@ -1,11 +1,16 @@
 function checkCashRegister(price, cash, cid) {
-	var change = [];
+	let change = [];
+	let change2 = [];
 
-	var changeDue = cash - price;
-	var valueOf = [0.01, 0.05, 0.1, 0.25, 1, 5, 10, 20, 100];
-	var revCid = cid.reverse();
-	var valueRev = valueOf.reverse();
-	var cidTotal = 0;
+	let changeDue = cash - price;
+	let valueOf = [0.01, 0.05, 0.1, 0.25, 1, 5, 10, 20, 100];
+	let revCid = cid.reverse();
+
+	let valueRev = valueOf.reverse();
+	let cidTotal = 0;
+	var accumulator = 0
+	var ttl = 0;
+
 
 	//1. sum cash in draw
 	cid.forEach(function(denomination, index) {
@@ -20,28 +25,40 @@ function checkCashRegister(price, cash, cid) {
 	} else {
 		//LOGIC
 		function makeChange() {
-			var i = 0;
+			let i = 0;
 			console.log("inside else");
+
 
 			while (changeDue > 0) {
 				if (changeDue >= valueRev[i]) {
-					change.push(valueRev[i]);
+
+					let key = revCid[i][0]
+					let value = valueRev[i]
+					ttl += value
+					//console.log("key", key, "value", value)
+					let array = [key, value]
+					change.push(array);
 					changeDue -= valueRev[i];
-					console.log("changeDue", changeDue);
-				} else if (changeDue === 0) {
-					return;
+					console.log(ttl)
+
+				//console.log("changeDue", changeDue);
 				} else {
+
 					i++;
 				}
 			}
 		}
 		makeChange();
 		console.log(change);
+
+
 	}
 	//return change;
+
+
 }
 
-checkCashRegister(7.5, 20.0, [
+checkCashRegister(.5, 9, [
 	["PENNY", 1.01],
 	["NICKEL", 2.05],
 	["DIME", 3.1],
