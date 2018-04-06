@@ -1,6 +1,29 @@
 function updateInventory(arr1, arr2) {
+    var values1 = [];
+    var keys1 = [];
+    var values2 = [];
+    var keys2 = [];
     // All inventory must be accounted for or you're fired!
-    return arr1;
+
+    //refactor to map
+    arr1.forEach(function(array) {
+        var value = array[0];
+        var key = array[1];
+        values1.push(value);
+        keys1.push(key);
+    });
+
+    //refactor to map
+    arr2.forEach(function(array) {
+        var value = array[0];
+        var key = array[1];
+        values2.push(value);
+        keys2.push(key);
+    });
+
+    values1.forEach(function(arr) {
+        console.log(keys1[arr]);
+    });
 }
 
 // Example inventory lists
